@@ -1,0 +1,456 @@
+openapi: 3.0.1
+info:
+  title: Account Management
+  description: 'Api exposed by account management service'
+  version: 0.0.2
+externalDocs:
+  description: Go to source Code
+  url: https://bitbucket.org/konradboniecki/account-management/src/master/
+servers:
+  - url: http://localhost:8080/api/account-mgt/v1
+  - url: https://konradboniecki.com.pl/api/account-mgt/v1
+tags:
+  - name: Account Management
+    description: Api for managing accounts.
+  - name: Passwords
+    description: Api for operations related to password
+  - name: Account Activation
+    description: Api for operations related to account activation
+security:
+  - basicAuth: [ ]
+paths:
+  '/accounts':
+    post:
+      tags:
+        - Account Management
+      summary: Create new account.
+      operationId: createAccount
+      requestBody:
+        description: Properties for account creation
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountCreation'
+        required: true
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedAccount'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/accounts/{accountIdOrEmail}':
+    get:
+      tags:
+        - Account Management
+      summary: Find account.
+      operationId: findAccount
+      parameters:
+        - in: path
+          name: accountIdOrEmail
+          description: Unique identifier of an account in form of UUID or account's email in form of string.
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+        - in: query
+          name: findBy
+          description: Type of id provided in path.
+          required: false
+          schema:
+            type: string
+            enum: [ "id", "email" ]
+            default: "id"
+            example: "id"
+      responses:
+        '200':
+          description: Account found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/ResourceNotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/accounts/{accountId}':
+    delete:
+      tags:
+        - Account Management
+      summary: Delete account.
+      operationId: deleteAccount
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+      responses:
+        '204':
+          description: Account deleted.
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/ResourceNotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/accounts/{accountId}/credentials':
+    get:
+      tags:
+        - Passwords
+      summary: Check credentials.
+      operationId: checkCredentials
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+        - in: header
+          name: password
+          description: "hashed password"
+          schema:
+            type: string
+            maxLength: 256
+          required: true
+      responses:
+        '200':
+          description: Credentials are valid.
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/ResourceNotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/accounts/{accountId}/families/{familyId}':
+    put:
+      tags:
+        - Account Management
+      summary: Assign familyToAccount
+      operationId: assignAccountToFamily
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+        - $ref: '#/components/parameters/FamilyId'
+      responses:
+        '200':
+          description: Family assigned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/ResourceNotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/accounts/{accountId}/password':
+    put:
+      tags:
+        - Passwords
+      summary: Change password
+      operationId: changePassword
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordModification'
+        required: true
+      responses:
+        '200':
+          description: Password changed.
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/ResourceNotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/accounts/{accountId}/activation-codes':
+    post:
+      tags:
+        - Account Activation
+      summary: Create new activation code.
+      operationId: createActivationCode
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivationCode'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/accounts/{accountId}/activation-codes/{activationCode}':
+    get:
+      tags:
+        - Account Activation
+      summary: Activate account.
+      operationId: activateAccount
+      parameters:
+        - $ref: '#/components/parameters/AccountId'
+        - $ref: '#/components/parameters/ActivationCode'
+      responses:
+        '302':
+          description: Redirection to login page after account activation.
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+              description: Login page.
+              example: https://konradboniecki.com.pl/login
+              required: true
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '404':
+          $ref: '#/components/responses/ResourceNotFoundError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    AccountCreation:
+      type: object
+      required:
+        - familyId
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 256
+          example: "john@doe.com"
+        firstName:
+          type: string
+          maxLength: 128
+          example: "John"
+        lastName:
+          type: string
+          maxLength: 128
+          example: "Doe"
+        password:
+          type: string
+          maxLength: 256
+          example: "d8gds-4gss33A"
+    CreatedAccount:
+      type: object
+      required:
+        - id
+        - email
+        - firstName
+        - lastName
+        - created
+        - enabled
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "dc1fd96a-2532-4a81-afbe-7f7b2245331e"
+        email:
+          type: string
+          format: email
+          maxLength: 256
+          example: "john@doe.com"
+        firstName:
+          type: string
+          maxLength: 128
+          example: "John"
+        lastName:
+          type: string
+          maxLength: 128
+          example: "Doe"
+        created:
+          type: string
+          format: date-time
+          example: "2021-01-30T08:30:00Z"
+        enabled:
+          type: boolean
+          description: "true/false flag if account is enabled or not"
+          example: false
+    Account:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/AccountProperties'
+    AccountProperties:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "dc1fd96a-2532-4a81-afbe-7f7b2245331e"
+        familyId:
+          type: string
+          format: uuid
+          example: "dc1fd96a-2532-4a81-afbe-7f7b2245331e"
+        email:
+          type: string
+          format: email
+          maxLength: 256
+          example: "john@doe.com"
+        firstName:
+          type: string
+          maxLength: 128
+          example: "John"
+        lastName:
+          type: string
+          maxLength: 128
+          example: "Doe"
+        created:
+          type: string
+          format: date-time
+          example: "2021-01-30T08:30:00Z"
+        enabled:
+          type: boolean
+          description: "true/false flag if account is enabled or not"
+          example: false
+    PasswordModification:
+      type: object
+      required:
+        - accountId
+        - newPassword
+      properties:
+        accountId:
+          type: string
+          format: uuid
+          example: "dc1fd96a-2532-4a81-afbe-7f7b2245331e"
+        newPassword:
+          type: string
+          maxLength: 256
+          example: "hashedValue"
+    ActivationCode:
+      type: object
+      required:
+        - id
+        - accountId
+        - activationCode
+        - created
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "dc1fd96a-2532-4a81-afbe-7f7b2245331e"
+        accountId:
+          type: string
+          format: uuid
+          example: "dc1fd96a-2532-4a81-afbe-7f7b2245331e"
+        activationCode:
+          type: string
+          format: uuid
+          example: "dc1fd96a-2532-4a81-afbe-7f7b2245331e"
+        created:
+          type: string
+          format: date-time
+          example: "2021-01-30T08:30:00Z"
+    ErrorDescription:
+      title: ErrorDescription
+      description: |
+        [RFC 7807](https://tools.ietf.org/html/rfc7807) Problem Details for HTTP
+      type: object
+      required:
+        - status
+        - title
+      properties:
+        status:
+          type: integer
+          format: int32
+          description: |
+            The HTTTP response status code
+        title:
+          type: string
+          format: int32
+          description: |
+            Summary of problem type
+          maxLength: 4096
+        type:
+          type: string
+          description: |
+            An URI reference [RFC3986] that identifies the problem type.
+          maxLength: 4096
+        detail:
+          type: string
+          description: |
+            Explanation specific to this occurence of the problem.
+          maxLength: 4096
+        instance:
+          type: string
+          description: |
+            An URI reference that identifies the specific ocurrence of the problem.
+          maxLength: 4096
+  responses:
+    ResourceNotFoundError:
+      description: |
+        Resource or subresource is not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDescription'
+          examples:
+            response:
+              value:
+                status: 404
+                title: Resource not found
+                type: ResourceNotFound
+                details: Resource of subresource not found.
+    BadRequestError:
+      description: |
+        The server cannot or will not process the request due to an apparent client error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDescription'
+          examples:
+            response:
+              value:
+                status: 400
+                title: Bad Request
+                type: InvalidRequest
+                details: Invalid request.
+    InternalServerError:
+      description: |
+        Server encountered an unexpected condition that prevented it from fulfilling the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDescription'
+          examples:
+            response:
+              value:
+                status: 500
+                title: Internal Server Error
+                type: UnexpectedError
+                details: Unexpected error occurred.
+  parameters:
+    AccountId:
+      name: accountId
+      in: path
+      description: Unique identifier of an account in form of UUID.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    FamilyId:
+      name: familyId
+      in: path
+      description: Unique identifier of a family in form of UUID.
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ActivationCode:
+      name: activationCode
+      in: path
+      description: Activation code in form of UUID.
+      required: true
+      schema:
+        type: string
+        format: uuid
+

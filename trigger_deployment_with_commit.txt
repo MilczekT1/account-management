@@ -1,0 +1,19 @@
+.
+        public Account(String jsonObjectName, ObjectNode json){
+        if (jsonObjectName == null)
+            throw new NullPointerException("Account has been initialized with null");
+        if (jsonObjectName.equals(""))
+            throw new IllegalArgumentException("Account has been initialized with either \"\"");
+
+        // no password and register date
+        JsonNode accNode = json.get(jsonObjectName);
+
+        if (accNode.has("id")) setId(accNode.get("id").asLong());
+        if (accNode.has("familyId")) setFamilyId(accNode.get("familyId").asLong());
+        if (accNode.has("firstName")) setFirstName(accNode.get("firstName").asText());
+        if (accNode.has("lastName")) setLastName(accNode.get("lastName").asText());
+        if (accNode.has("email")) setEmail(accNode.get("email").asText());
+        if (accNode.has("role")) setRole(accNode.get("role").asText());
+        if (accNode.has("enabled")) setEnabled(accNode.get("enabled").asBoolean());
+    }
+    .

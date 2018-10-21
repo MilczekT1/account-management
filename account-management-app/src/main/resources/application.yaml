@@ -1,0 +1,11 @@
+logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+server:
+  port: 8080
+spring:
+  application.name: account-management
+  cloud.config:
+    enabled: true
+    fail-fast: true
+    retry.max-attempts: 10
+    username: ${CONFIG_SERVER_BA_USERNAME}
+    password: ${CONFIG_SERVER_BA_PASSWORD}
