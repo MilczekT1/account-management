@@ -2,8 +2,8 @@ deployment_branch_filter: &deployment_branch_filter
   filters:
     branches:
       only:
-        - develop
         - master
+        - develop
         - /feature.*/
         - /bugfix.*/
 test_branch_filter: &test_branch_filter
@@ -28,15 +28,11 @@ workflows:
       - build
       - sonar-scanning:
           context: SonarCloud
-      - approve_deployment:
-          type: approval
-          requires:
-            - build
-          <<: *deployment_branch_filter
       - pipeline-template/deploy_microservice:
           serviceName: "account-management"
           requires:
-            - approve_deployment
+            - build
+          <<: *deployment_branch_filter
       - acceptance-tests-approval:
           type: approval
           requires:
