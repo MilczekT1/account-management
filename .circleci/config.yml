@@ -33,15 +33,11 @@ workflows:
           requires:
             - build
           <<: *deployment_branch_filter
-      - acceptance-tests-approval:
-          type: approval
-          requires:
-            - build
-          <<: *test_branch_filter
       - pipeline-template/run_acceptance_tests:
           sharedWorkspacePath: "shared_workspace"
           requires:
-            - acceptance-tests-approval
+            - pipeline-template/deploy_microservice
+          <<: *test_branch_filter
       - deploy-to-nexus:
           requires:
             - build
