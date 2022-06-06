@@ -42,8 +42,7 @@ workflows:
           sharedWorkspacePath: "shared_workspace"
           requires:
             - acceptance-tests-approval
-      - deploy-to-nexus-approval:
-          type: approval
+      - deploy-to-nexus:
           requires:
             - build
           filters:
@@ -51,9 +50,6 @@ workflows:
               only:
                 - master
                 - develop
-      - deploy-to-nexus:
-          requires:
-            - deploy-to-nexus-approval
 jobs:
   build:
     <<: *docker_java_11
