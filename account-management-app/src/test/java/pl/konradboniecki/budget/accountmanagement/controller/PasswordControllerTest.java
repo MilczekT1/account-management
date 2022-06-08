@@ -48,7 +48,7 @@ class PasswordControllerTest {
 
     @BeforeAll
     void healthcheck() {
-        baseUrl = String.format("http://localhost:%s%s/accounts", port, PasswordController.BASE_PATH);
+        baseUrl = String.format("http://localhost:%s/api/account-mgt/v1/accounts", port);
         httpHeaders = new HttpHeaders();
         httpHeaders.setBasicAuth(ChassisSecurityBasicAuthHelper.getEncodedCredentials());
 

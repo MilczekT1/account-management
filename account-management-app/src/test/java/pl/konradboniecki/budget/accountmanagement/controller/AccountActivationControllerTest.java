@@ -32,11 +32,12 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
         webEnvironment = RANDOM_PORT
 )
 class AccountActivationControllerTest {
+
     @Value("${budget.baseUrl.gateway}")
     private String BASE_URI;
+
     private String contextPath;
     @LocalServerPort
-
     private int port;
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -55,7 +56,7 @@ class AccountActivationControllerTest {
 
     @BeforeEach
     void setUp() {
-        contextPath = "http://localhost:" + port + AccountActivationController.BASE_PATH + "/accounts";
+        contextPath = "http://localhost:" + port + "/api/account-mgt/v1/accounts";
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBasicAuth(ChassisSecurityBasicAuthHelper.getEncodedCredentials());
         httpEntity = new HttpEntity<>(httpHeaders);

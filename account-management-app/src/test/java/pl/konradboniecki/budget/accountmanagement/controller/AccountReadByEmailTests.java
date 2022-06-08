@@ -43,7 +43,7 @@ class AccountReadByEmailTests {
 
     @BeforeAll
     void healthcheck() {
-        baseUrl = "http://localhost:" + port + AccountManagementController.BASE_PATH;
+        baseUrl = "http://localhost:" + port + "/api/account-mgt/v1";
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBasicAuth(ChassisSecurityBasicAuthHelper.getEncodedCredentials());
         httpEntity = new HttpEntity<>(httpHeaders);

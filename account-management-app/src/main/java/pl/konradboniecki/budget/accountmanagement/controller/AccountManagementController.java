@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.konradboniecki.budget.accountmanagement.service.AccountService;
 import pl.konradboniecki.budget.openapi.api.AccountManagementApi;
@@ -15,13 +14,9 @@ import pl.konradboniecki.budget.openapi.dto.model.OASCreatedAccount;
 
 import java.util.UUID;
 
-import static pl.konradboniecki.budget.accountmanagement.controller.AccountManagementController.BASE_PATH;
-
 @Slf4j
 @RestController
-@RequestMapping(BASE_PATH)
 public class AccountManagementController implements AccountManagementApi {
-    public static final String BASE_PATH = "/api/account-mgt/v1";
 
     private final AccountService accountService;
 

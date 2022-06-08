@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
-import pl.konradboniecki.budget.accountmanagement.controller.AccountManagementController;
 import pl.konradboniecki.budget.accountmanagement.cucumber.commons.SharedData;
 import pl.konradboniecki.budget.accountmanagement.cucumber.security.Security;
 
@@ -66,7 +65,7 @@ public class CommonSteps {
         log.info("SCENARIO CLEANUP: Deleting account with id: {}", accountId);
         HttpEntity<?> entity = new HttpEntity<>(null, security.getSecurityHeaders());
         ResponseEntity<?> responseEntity = testRestTemplate
-                .exchange(AccountManagementController.BASE_PATH + "/accounts/{accountId}", HttpMethod.DELETE, entity, Void.class, accountId);
+                .exchange("/api/account-mgt/v1/accounts/{accountId}", HttpMethod.DELETE, entity, Void.class, accountId);
         sharedData.setLastResponseEntity(responseEntity);
         Assertions.assertThat(responseEntity.getStatusCode())
                 .isIn(HttpStatus.NO_CONTENT, HttpStatus.NOT_FOUND);
