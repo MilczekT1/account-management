@@ -31,7 +31,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(
         webEnvironment = RANDOM_PORT
 )
-public class AccountActivationControllerTest {
+class AccountActivationControllerTest {
     @Value("${budget.baseUrl.gateway}")
     private String BASE_URI;
     private String contextPath;
@@ -72,8 +72,8 @@ public class AccountActivationControllerTest {
         // Then:
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
         List<String> locationHeader = responseEntity.getHeaders().get("Location");
-        assertThat(locationHeader).isNotNull();
-        assertThat(locationHeader.isEmpty()).isFalse();
+        assertThat(locationHeader).isNotNull()
+                .isNotEmpty();
         assertThat(locationHeader.get(0)).isEqualTo(BASE_URI + "/register");
 
     }
@@ -89,8 +89,8 @@ public class AccountActivationControllerTest {
         // Then:
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
         List<String> locationHeader = responseEntity.getHeaders().get("Location");
-        assertThat(locationHeader).isNotNull();
-        assertThat(locationHeader.isEmpty()).isFalse();
+        assertThat(locationHeader).isNotNull()
+                .isNotEmpty();
         assertThat(locationHeader.get(0)).isEqualTo(BASE_URI + "/login");
     }
 
@@ -113,13 +113,13 @@ public class AccountActivationControllerTest {
         // Then:
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
         List<String> locationHeader = responseEntity.getHeaders().get("Location");
-        assertThat(locationHeader).isNotNull();
-        assertThat(locationHeader.isEmpty()).isFalse();
+        assertThat(locationHeader).isNotNull()
+                .isNotEmpty();
         assertThat(locationHeader.get(0)).isEqualTo(BASE_URI + "/login");
     }
 
     @Test
-    public void activateUser_BAHeaderNotRequired() {
+    void activateUser_BAHeaderNotRequired() {
         // When:
         String accountId = UUID.randomUUID().toString();
         String activationCode = UUID.randomUUID().toString();

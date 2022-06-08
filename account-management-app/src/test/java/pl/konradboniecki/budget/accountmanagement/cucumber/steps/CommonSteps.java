@@ -77,8 +77,8 @@ public class CommonSteps {
         HttpHeaders httpHeaders = sharedData.getLastResponseEntity().getHeaders();
 
         String redirectLocation = "https://konradboniecki.com.pl/register";
-        assertThat(httpHeaders.getLocation()).isNotNull();
-        assertThat(httpHeaders.getLocation().toString()).isEqualTo(redirectLocation);
+        assertThat(httpHeaders.getLocation()).isNotNull()
+                .hasToString(redirectLocation);
         assertThat(sharedData.getStatusCode()).isEqualTo(HttpStatus.FOUND);
     }
 
@@ -87,8 +87,8 @@ public class CommonSteps {
         HttpHeaders httpHeaders = sharedData.getLastResponseEntity().getHeaders();
 
         String redirectLocation = "https://konradboniecki.com.pl/login";
-        assertThat(httpHeaders.getLocation()).isNotNull();
-        assertThat(httpHeaders.getLocation().toString()).isEqualTo(redirectLocation);
+        assertThat(httpHeaders.getLocation()).isNotNull()
+                .hasToString(redirectLocation);
         assertThat(sharedData.getStatusCode()).isEqualTo(HttpStatus.FOUND);
     }
 }

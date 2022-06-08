@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
         webEnvironment = WebEnvironment.NONE,
         properties = "spring.cloud.config.enabled=false"
 )
-public class ActivationServiceTest {
+class ActivationServiceTest {
 
     @Autowired
     private ActivationService activationService;
@@ -48,7 +48,7 @@ public class ActivationServiceTest {
     private String siteBaseUrl;
 
     @BeforeAll
-    private void setUp() {
+    void setUp() {
         notExistingId = UUID.randomUUID().toString();
         idOfExistingAndEnabledAccount = UUID.randomUUID().toString();
         idOfExistingAndNotEnabledAccount = UUID.randomUUID().toString();
@@ -57,7 +57,7 @@ public class ActivationServiceTest {
     }
 
     @Test
-    public void redirectToRegistrationPageWhenAccountNotFound() {
+    void redirectToRegistrationPageWhenAccountNotFound() {
         // Given:
         when(accountService.findById(notExistingId)).thenReturn(Optional.empty());
         // When:
@@ -67,7 +67,7 @@ public class ActivationServiceTest {
     }
 
     @Test
-    public void redirectToLoginPageWhenAccountIsNotEnabledYet() {
+    void redirectToLoginPageWhenAccountIsNotEnabledYet() {
         // Given:
         mockReturningPresentAndEnabledAccount();
         // When:
@@ -77,7 +77,7 @@ public class ActivationServiceTest {
     }
 
     @Test
-    public void throwExceptionWhenActivationCodeIsNotPresent() {
+    void throwExceptionWhenActivationCodeIsNotPresent() {
         // Given:
         mockReturningPresentAndNotEnabledAccount();
         when(activationCodeService.findByAccountId(idOfExistingAndNotEnabledAccount))
@@ -94,7 +94,7 @@ public class ActivationServiceTest {
     }
 
     @Test
-    public void throwExceptionWhenActivationCodeDoesNotMatch() {
+    void throwExceptionWhenActivationCodeDoesNotMatch() {
         // Given:
         mockReturningPresentAndNotEnabledAccount();
         mockReturningActivationCode();
@@ -110,7 +110,7 @@ public class ActivationServiceTest {
     }
 
     @Test
-    public void activateUserAndRedirectToLoginPage() {
+    void activateUserAndRedirectToLoginPage() {
         // Given:
         mockReturningPresentAndNotEnabledAccount();
         mockReturningActivationCode();
@@ -121,7 +121,7 @@ public class ActivationServiceTest {
     }
 
     @Test
-    public void throwAccountNotFoundExceptionIfNotFound() {
+    void throwAccountNotFoundExceptionIfNotFound() {
         // Given:
         String idOfMissingAccount = UUID.randomUUID().toString();
         when(accountService.findById(idOfMissingAccount))
@@ -129,8 +129,9 @@ public class ActivationServiceTest {
         // When:
         Throwable throwable = catchThrowableOfType(() -> activationService.createActivationCodeForAccountWithId(idOfMissingAccount), RuntimeException.class);
         // Then:
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(AccountNotFoundException.class);
+        assertThat(throwable)
+                .isNotNull()
+                .isInstanceOf(AccountNotFoundException.class);
     }
 
 

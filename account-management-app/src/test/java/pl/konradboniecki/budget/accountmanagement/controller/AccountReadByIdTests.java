@@ -30,7 +30,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(
         webEnvironment = RANDOM_PORT
 )
-public class AccountReadByIdTests {
+class AccountReadByIdTests {
 
     @Autowired
     private AccountService accountService;
@@ -45,7 +45,7 @@ public class AccountReadByIdTests {
     private static final String ACCOUNT_ID_PRESENT = UUID.randomUUID().toString();
 
     @BeforeAll
-    public void healthcheck() {
+    void healthcheck() {
         baseUrl = "http://localhost:" + port + AccountManagementController.BASE_PATH;
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -72,7 +72,7 @@ public class AccountReadByIdTests {
     }
 
     @Test
-    public void givenFindByIdWithDefaultParam_WhenFound_ThenAccountIsReturned() {
+    void givenFindByIdWithDefaultParam_WhenFound_ThenAccountIsReturned() {
         // Given
         String url = baseUrl + "/accounts/" + ACCOUNT_ID_PRESENT;
         mockAccountWithIdEqualPresentId();
@@ -83,7 +83,7 @@ public class AccountReadByIdTests {
     }
 
     @Test
-    public void givenFindByIdWithIdParam_WhenFound_ThenAccountIsReturned() {
+    void givenFindByIdWithIdParam_WhenFound_ThenAccountIsReturned() {
         // Given
         String url = baseUrl + "/accounts/" + ACCOUNT_ID_PRESENT + "?findBy=id";
         mockAccountWithIdEqualPresentId();
@@ -95,7 +95,7 @@ public class AccountReadByIdTests {
     }
 
     @Test
-    public void givenFindByIdWithDefaultParam_WhenFound_ThenResponseCodeIs200() {
+    void givenFindByIdWithDefaultParam_WhenFound_ThenResponseCodeIs200() {
         // Given
         String url = baseUrl + "/accounts/" + ACCOUNT_ID_PRESENT;
         mockAccountWithIdEqualPresentId();
@@ -107,7 +107,7 @@ public class AccountReadByIdTests {
     }
 
     @Test
-    public void givenFindByIdWithIdParam_WhenFound_ThenResponseCodeIs200() {
+    void givenFindByIdWithIdParam_WhenFound_ThenResponseCodeIs200() {
         // Given
         String url = baseUrl + "/accounts/" + ACCOUNT_ID_PRESENT + "?findBy=id";
         mockAccountWithIdEqualPresentId();
@@ -118,7 +118,7 @@ public class AccountReadByIdTests {
     }
 
     @Test
-    public void givenFindById_WhenNotFound_ThenResponseCodeIs404() {
+    void givenFindById_WhenNotFound_ThenResponseCodeIs404() {
         // Given
         String randomAccountId = UUID.randomUUID().toString();
         String url = baseUrl + "/" + randomAccountId;
@@ -131,7 +131,7 @@ public class AccountReadByIdTests {
     }
 
     @Test
-    public void givenFindById_WhenInvalidId_ThenResponseCodeIs400() {
+    void givenFindById_WhenInvalidId_ThenResponseCodeIs400() {
         // Given
         String url = baseUrl + "/accounts/345trdsfv";
         // When
@@ -141,7 +141,7 @@ public class AccountReadByIdTests {
     }
 
     @Test
-    public void givenFindById_WhenUnknownParam_ThenResponseCodeIs400() {
+    void givenFindById_WhenUnknownParam_ThenResponseCodeIs400() {
         // Given
         String url = baseUrl + "/accounts/" + ACCOUNT_ID_PRESENT + "?findBy=dupa";
         // When

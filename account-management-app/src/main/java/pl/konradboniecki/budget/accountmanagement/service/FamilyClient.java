@@ -22,7 +22,7 @@ public class FamilyClient {
 
     private RestTemplate restTemplate;
     @Value("${budget.baseUrl.familyManagement}")
-    private String BASE_URL;
+    private String gatewayUrl;
 
     @Autowired
     public FamilyClient(RestTemplate restTemplate) {
@@ -35,7 +35,7 @@ public class FamilyClient {
             headers.setBasicAuth(ChassisSecurityBasicAuthHelper.getEncodedCredentials());
             HttpEntity<?> httpEntity = new HttpEntity<>(headers);
             ResponseEntity<JsonNode> responseEntity = restTemplate.exchange(
-                    BASE_URL + "/api/family-mgt/v1/families/" + familyId,
+                    gatewayUrl + "/api/family-mgt/v1/families/" + familyId,
                     HttpMethod.GET,
                     httpEntity, JsonNode.class);
             return responseEntity.getStatusCode().is2xxSuccessful();

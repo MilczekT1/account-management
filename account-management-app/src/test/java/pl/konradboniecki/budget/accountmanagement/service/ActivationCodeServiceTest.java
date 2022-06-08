@@ -21,7 +21,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
         webEnvironment = WebEnvironment.NONE,
         properties = "spring.cloud.config.enabled=false"
 )
-public class ActivationCodeServiceTest {
+class ActivationCodeServiceTest {
 
     @MockBean
     private ActivationCodeRepository activationCodeRepository;
@@ -31,7 +31,7 @@ public class ActivationCodeServiceTest {
 
     @Test
     @DisplayName("Invoke repository method on service call for findByAccountID")
-    public void givenFindByAccountId_whenServiceIsCalled_thenRepoMethodIsInvoked() {
+    void givenFindByAccountId_whenServiceIsCalled_thenRepoMethodIsInvoked() {
         // Given:
         String accountId = UUID.randomUUID().toString();
         when(activationCodeRepository.findByAccountId(anyString())).thenReturn(null);
@@ -43,7 +43,7 @@ public class ActivationCodeServiceTest {
 
     @Test
     @DisplayName("Invoke repository method on service call for deleteById")
-    public void givenDeleteById_whenServiceIsCalled_thenRepoMethodIsInvoked() {
+    void givenDeleteById_whenServiceIsCalled_thenRepoMethodIsInvoked() {
         // Given:
         String accountId = UUID.randomUUID().toString();
         doNothing().when(activationCodeRepository).deleteById(anyString());

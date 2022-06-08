@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class ActivationCodeCleanupService {
-    static final long ONE_DAY = 24 * 60 * 60 * 1000;
+    static final long ONE_DAY = 24 * 60 * 60 * 1000L;
 
     private final ActivationCodeRepository activationCodeRepository;
 

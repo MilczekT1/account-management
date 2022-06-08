@@ -29,7 +29,7 @@ import static pl.konradboniecki.budget.accountmanagement.service.FamilyClientTes
         ids = {STUB_GROUP_ID + ":" + STUB_ARTIFACT_ID + ":" + STUB_VERSION + ":stubs"},
         stubsMode = REMOTE
 )
-public class FamilyClientTest {
+class FamilyClientTest {
 
     public static final String STUB_VERSION = "0.6.0-SNAPSHOT";
     public static final String STUB_GROUP_ID = "pl.konradboniecki.budget";
@@ -42,17 +42,17 @@ public class FamilyClientTest {
 
     @BeforeEach
     void setUp() {
-        familyClient.setBASE_URL("http://localhost:" + stubRunnerPort);
+        familyClient.setGatewayUrl("http://localhost:" + stubRunnerPort);
     }
 
     @Test
-    public void returnTrueIfFamilyFound() {
+    void returnTrueIfFamilyFound() {
         String presentFamilyId = "6e3c8e50-099a-4a44-9f63-0a6704937649";
         assertThat(familyClient.isPresentById(presentFamilyId)).isTrue();
     }
 
     @Test
-    public void given_notExistingId_whenFindById_thenReturnFalse() {
+    void given_notExistingId_whenFindById_thenReturnFalse() {
         String idOfNotExistingFamily = "ddad74b9-8fb3-4195-a999-07c01aaee371";
         Boolean result = familyClient.isPresentById(idOfNotExistingFamily);
         assertThat(result).isFalse();

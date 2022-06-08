@@ -30,7 +30,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
         webEnvironment = WebEnvironment.NONE,
         properties = "spring.cloud.config.enabled=false"
 )
-public class AccountServiceTest {
+class AccountServiceTest {
 
     @Autowired
     private AccountService accountService;
@@ -40,18 +40,18 @@ public class AccountServiceTest {
     private FamilyClient familyClient;
 
     @Test
-    public void givenInvalidId_whenFindById_thenExceptionIsThrown() {
+    void givenInvalidId_whenFindById_thenExceptionIsThrown() {
         // Given:
         String invalidId = "blabla";
         // When:
         Throwable throwable = catchThrowableOfType(() -> accountService.findByIdFromParam(invalidId), Exception.class);
         // Then:
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
+        assertThat(throwable).isNotNull()
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenActivateAccountWithId_thenRepoMethodIsInvoked() {
+    void whenActivateAccountWithId_thenRepoMethodIsInvoked() {
         // Given:
         String accountId = UUID.randomUUID().toString();
         doNothing().when(accountRepository).setEnabled(anyString());
@@ -62,7 +62,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void givenAssignmentFamilyToAccount_whenFamilyFound_thenSetFamilyId() {
+    void givenAssignmentFamilyToAccount_whenFamilyFound_thenSetFamilyId() {
         // Given:
         String familyId = UUID.randomUUID().toString();
         String accountId = UUID.randomUUID().toString();
@@ -72,18 +72,18 @@ public class AccountServiceTest {
                 .setId(accountId)
                 .setFamilyId(familyId);
         when(accountRepository.findById(accountId)).thenReturn(Optional.of(accountToFind));
-        when(familyClient.isPresentById(eq(familyId))).thenReturn(true);
+        when(familyClient.isPresentById(familyId)).thenReturn(true);
         when(accountRepository.save(any(Account.class)))
                 .thenReturn(accountToReturn);
         // When:
         OASAccount acc = accountService.assignAccountToFamily(accountId, familyId);
         // Then:
         assertThat(acc).isNotNull();
-        assertThat(acc.getFamilyId().toString()).isEqualTo(familyId);
+        assertThat(acc.getFamilyId()).hasToString(familyId);
     }
 
     @Test
-    public void givenAssignmentFamilyToAccount_whenFamilyNotFoundWithClientError_thenThrow() {
+    void givenAssignmentFamilyToAccount_whenFamilyNotFoundWithClientError_thenThrow() {
         // Given:
         String familyId = UUID.randomUUID().toString();
         String accountId = UUID.randomUUID().toString();
@@ -94,8 +94,8 @@ public class AccountServiceTest {
                         accountService.assignAccountToFamily(accountId, familyId),
                 FamilyNotFoundException.class);
         // Then:
-        assertThat(throwable).isNotNull();
-        assertThat(throwable).isInstanceOf(FamilyNotFoundException.class);
+        assertThat(throwable).isNotNull()
+                .isInstanceOf(FamilyNotFoundException.class);
     }
 
     @Test

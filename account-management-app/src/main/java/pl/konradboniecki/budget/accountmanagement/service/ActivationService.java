@@ -22,7 +22,7 @@ public class ActivationService {
     private final AccountService accountService;
     private final ActivationCodeService activationCodeService;
     @Value("${budget.baseUrl.gateway}")
-    private String BASE_URL;
+    private String gatewayUrl;
 
     @Autowired
     public ActivationService(AccountService accountService, ActivationCodeService activationCodeService) {
@@ -33,10 +33,10 @@ public class ActivationService {
     public String activateAccount(String id, String activationCodeFromUrl) {
         Optional<Account> acc = accountService.findById(id);
         if (acc.isEmpty()) {
-            return BASE_URL + "/register";
+            return gatewayUrl + "/register";
         }
         if (acc.get().isEnabled()) {
-            return BASE_URL + "/login";
+            return gatewayUrl + "/login";
         }
 
         Optional<ActivationCode> activationCode =
@@ -46,7 +46,7 @@ public class ActivationService {
             accountService.activateAccountWith(id);
             log.info("User with ID: " + acc.get().getId() + " has been activated");
             activationCodeService.deleteById(activationCode.get().getId());
-            return BASE_URL + "/login";
+            return gatewayUrl + "/login";
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid activation link");
     }

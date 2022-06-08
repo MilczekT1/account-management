@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(Lifecycle.PER_CLASS)
-public class AccountTest {
+class AccountTest {
 
     @Test
     void testIfHasFamily() {
@@ -21,7 +21,7 @@ public class AccountTest {
     }
 
     @Test
-    public void testEmailValidation() {
+    void testEmailValidation() {
         // TODO: edge cases
         assertTrue(Account.isEmailValid("konrad_boniecki@hotmail.com"));
         assertFalse(Account.isEmailValid(""));
