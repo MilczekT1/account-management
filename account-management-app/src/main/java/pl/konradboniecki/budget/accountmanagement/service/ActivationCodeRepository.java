@@ -16,7 +16,4 @@ public interface ActivationCodeRepository extends CrudRepository<ActivationCode,
     List<ActivationCode> findAll();
 
     ActivationCode save(ActivationCode entity);
-//    long count();
-//    void deleteById(Long aLong);
-//    boolean existsById(Long id);
 }

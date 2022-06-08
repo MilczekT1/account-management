@@ -30,7 +30,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(
         webEnvironment = RANDOM_PORT
 )
-public class AccountReadByEmailTests {
+class AccountReadByEmailTests {
 
     @Autowired
     private TestRestTemplate rest;
@@ -42,8 +42,8 @@ public class AccountReadByEmailTests {
     private HttpEntity<?> httpEntity;
 
     @BeforeAll
-    public void healthcheck() {
-        baseUrl = "http://localhost:" + port + AccountManagementController.BASE_PATH;
+    void healthcheck() {
+        baseUrl = "http://localhost:" + port + "/api/account-mgt/v1";
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBasicAuth(ChassisSecurityBasicAuthHelper.getEncodedCredentials());
         httpEntity = new HttpEntity<>(httpHeaders);
@@ -55,7 +55,7 @@ public class AccountReadByEmailTests {
     }
 
     @Test
-    public void givenFindByEmail_WhenFound_ThenAccountIsReturned() {
+    void givenFindByEmail_WhenFound_ThenAccountIsReturned() {
         // Given
         String email = "test@mail.com";
         Account acc = new Account()
@@ -77,7 +77,7 @@ public class AccountReadByEmailTests {
     }
 
     @Test
-    public void givenFindByEmail_WhenFound_ThenResponseCodeIs200() {
+    void givenFindByEmail_WhenFound_ThenResponseCodeIs200() {
         // Given
         String email = "test@mail.com";
         Account acc = new Account()
@@ -97,7 +97,7 @@ public class AccountReadByEmailTests {
     }
 
     @Test
-    public void givenFindByEmail_WhenNotFound_ThenResponseCodeIs404() {
+    void givenFindByEmail_WhenNotFound_ThenResponseCodeIs404() {
         // Given
         String url = baseUrl + "/accounts/79esriguyfxhjvTEST@MAIL.tv?findBy=email";
         // When
@@ -107,7 +107,7 @@ public class AccountReadByEmailTests {
     }
 
     @Test
-    public void givenFindByEmail_WhenInvalidEmail_ThenResponseCodeIs400() {
+    void givenFindByEmail_WhenInvalidEmail_ThenResponseCodeIs400() {
         // Given
         String urlWithoutEmail = baseUrl + "/accounts/3?findBy=email";
         // When
@@ -117,7 +117,7 @@ public class AccountReadByEmailTests {
     }
 
     @Test
-    public void return401FromControllerWhenBAHeaderIsMissing() {
+    void return401FromControllerWhenBAHeaderIsMissing() {
         // Given:
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<?> httpEntity = new HttpEntity<>(httpHeaders);

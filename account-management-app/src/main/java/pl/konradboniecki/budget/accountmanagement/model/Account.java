@@ -3,19 +3,19 @@ package pl.konradboniecki.budget.accountmanagement.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.regex.Pattern;
 
 @Entity
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
 public class Account implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
@@ -44,8 +44,6 @@ public class Account implements Serializable {
     }
 
     public static boolean isEmailValid(String email) {
-        if (StringUtils.isEmpty(email))
-            return false;
-        return Pattern.matches("(\\w||\\.)+@\\w+.[a-zA-Z]+", email);
+        return EmailValidator.getInstance().isValid(email);
     }
 }

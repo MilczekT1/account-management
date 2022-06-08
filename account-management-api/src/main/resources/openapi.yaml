@@ -7,8 +7,8 @@ externalDocs:
   description: Go to source Code
   url: https://bitbucket.org/konradboniecki/account-management/src/master/
 servers:
-  - url: http://localhost:8080/api/account-mgt/v1
-  - url: https://konradboniecki.com.pl/api/account-mgt/v1
+  - url: http://localhost:8080
+  - url: https://konradboniecki.com.pl
 tags:
   - name: Account Management
     description: Api for managing accounts.
@@ -19,7 +19,7 @@ tags:
 security:
   - basicAuth: [ ]
 paths:
-  '/accounts':
+  '/api/account-mgt/v1/accounts':
     post:
       tags:
         - Account Management
@@ -43,7 +43,7 @@ paths:
           $ref: '#/components/responses/BadRequestError'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/accounts/{accountIdOrEmail}':
+  '/api/account-mgt/v1/accounts/{accountIdOrEmail}':
     get:
       tags:
         - Account Management
@@ -79,7 +79,7 @@ paths:
           $ref: '#/components/responses/ResourceNotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/accounts/{accountId}':
+  '/api/account-mgt/v1/accounts/{accountId}':
     delete:
       tags:
         - Account Management
@@ -96,7 +96,7 @@ paths:
           $ref: '#/components/responses/ResourceNotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/accounts/{accountId}/credentials':
+  '/api/account-mgt/v1/accounts/{accountId}/credentials':
     get:
       tags:
         - Passwords
@@ -120,7 +120,7 @@ paths:
           $ref: '#/components/responses/ResourceNotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/accounts/{accountId}/families/{familyId}':
+  '/api/account-mgt/v1/accounts/{accountId}/families/{familyId}':
     put:
       tags:
         - Account Management
@@ -142,7 +142,7 @@ paths:
           $ref: '#/components/responses/ResourceNotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/accounts/{accountId}/password':
+  '/api/account-mgt/v1/accounts/{accountId}/password':
     put:
       tags:
         - Passwords
@@ -165,7 +165,7 @@ paths:
           $ref: '#/components/responses/ResourceNotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/accounts/{accountId}/activation-codes':
+  '/api/account-mgt/v1/accounts/{accountId}/activation-codes':
     post:
       tags:
         - Account Activation
@@ -184,7 +184,7 @@ paths:
           $ref: '#/components/responses/BadRequestError'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/accounts/{accountId}/activation-codes/{activationCode}':
+  '/api/account-mgt/v1/accounts/{accountId}/activation-codes/{activationCode}':
     get:
       tags:
         - Account Activation

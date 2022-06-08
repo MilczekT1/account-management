@@ -21,5 +21,5 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
                 "tests.acceptance.mockFamilyClient=true"
         })
 @CucumberContextConfiguration
-public class SpringIntegrationTest {
+public class SpringIntegrationTestConfiguration {
 }

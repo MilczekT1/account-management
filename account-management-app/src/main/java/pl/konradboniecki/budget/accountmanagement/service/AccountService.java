@@ -23,6 +23,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 @AllArgsConstructor
 public class AccountService {
 
+    private static final String ACCOUNT_NOT_FOUND_MSG = "";
+
     private final AccountRepository accountRepository;
     private final FamilyClient familyClient;
     private final AccountMapper accountMapper;
@@ -66,7 +68,8 @@ public class AccountService {
             if (account.isPresent()) {
                 return accountMapper.filterPassword(account.get());
             } else {
-                throw new AccountNotFoundException("Account with email: " + email + " not found.");
+                final var message = String.format("Account with email: %s not found.", email);
+                throw new AccountNotFoundException(message);
             }
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid email");
@@ -79,7 +82,8 @@ public class AccountService {
         if (account.isPresent()) {
             return accountMapper.filterPassword(account.get());
         } else {
-            throw new AccountNotFoundException("Account with id: " + id + " not found.");
+            final var message = String.format("Account with id: %s not found.", id);
+            throw new AccountNotFoundException(message);
         }
     }
 

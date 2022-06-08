@@ -34,7 +34,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(
         webEnvironment = RANDOM_PORT
 )
-public class PasswordControllerTest {
+class PasswordControllerTest {
 
     @MockBean
     private AccountService accountService;
@@ -47,8 +47,8 @@ public class PasswordControllerTest {
     private HttpHeaders httpHeaders;
 
     @BeforeAll
-    public void healthcheck() {
-        baseUrl = String.format("http://localhost:%s%s/accounts", port, PasswordController.BASE_PATH);
+    void healthcheck() {
+        baseUrl = String.format("http://localhost:%s/api/account-mgt/v1/accounts", port);
         httpHeaders = new HttpHeaders();
         httpHeaders.setBasicAuth(ChassisSecurityBasicAuthHelper.getEncodedCredentials());
 
@@ -60,7 +60,7 @@ public class PasswordControllerTest {
     }
 
     @Test
-    public void givenChangePassword_WhenAccountFound_ThenResponseCodeIs200() {
+    void givenChangePassword_WhenAccountFound_ThenResponseCodeIs200() {
         // Given
         when(accountService.findById(validId))
                 .thenReturn(Optional.of(new Account()));
@@ -76,7 +76,7 @@ public class PasswordControllerTest {
     }
 
     @Test
-    public void givenChangePassword_WhenAccountNotFound_ThenResponseCodeIs404() {
+    void givenChangePassword_WhenAccountNotFound_ThenResponseCodeIs404() {
         // Given
         String accountId = UUID.randomUUID().toString();
         OASPasswordModification passwordModification = new OASPasswordModification()
@@ -92,7 +92,7 @@ public class PasswordControllerTest {
     }
 
     @Test
-    public void createActivationCode_ifBAHeaderIsMissing_returnUnauthorized() {
+    void createActivationCode_ifBAHeaderIsMissing_returnUnauthorized() {
         // When:
         String url = baseUrl + "/" + UUID.randomUUID() + "/password";
         ResponseEntity<String> responseEntity = rest.exchange(url, HttpMethod.PUT, new HttpEntity<>(new HttpHeaders()), String.class);
@@ -101,7 +101,7 @@ public class PasswordControllerTest {
     }
 
     @Test
-    public void givenMissingAccount_WhenCheckCredentials_ThenResponseCodeIs404() {
+    void givenMissingAccount_WhenCheckCredentials_ThenResponseCodeIs404() {
         // Given:
         String missingAccountId = UUID.randomUUID().toString();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -118,7 +118,7 @@ public class PasswordControllerTest {
     }
 
     @Test
-    public void givenMissingBAHeader_WhenCheckCredentials_ThenResponseCodeIs401() {
+    void givenMissingBAHeader_WhenCheckCredentials_ThenResponseCodeIs401() {
         // Given:
         String randomAccountId = UUID.randomUUID().toString();
         HttpEntity<?> httpEntity = new HttpEntity<>(new HttpHeaders());
@@ -130,7 +130,7 @@ public class PasswordControllerTest {
     }
 
     @Test
-    public void givenCheckCredentials_WhenPasswordIsCorrect_ThenResponseCodeIs200() {
+    void givenCheckCredentials_WhenPasswordIsCorrect_ThenResponseCodeIs200() {
         // Given:
         String accountId = UUID.randomUUID().toString();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -147,7 +147,7 @@ public class PasswordControllerTest {
     }
 
     @Test
-    public void givenCheckCredentials_WhenPasswordIsIncorrect_ThenResponseCodeIs400() {
+    void givenCheckCredentials_WhenPasswordIsIncorrect_ThenResponseCodeIs400() {
         // Given:
         String accountId = UUID.randomUUID().toString();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -165,7 +165,7 @@ public class PasswordControllerTest {
     }
 
     @Test
-    public void givenMissingPasswordHeader_WhenCheckCredentials_ThenResponseCodeIs400() {
+    void givenMissingPasswordHeader_WhenCheckCredentials_ThenResponseCodeIs400() {
         // Given:
         String missingAccountId = UUID.randomUUID().toString();
         HttpEntity<?> httpEntity = new HttpEntity<>(httpHeaders);

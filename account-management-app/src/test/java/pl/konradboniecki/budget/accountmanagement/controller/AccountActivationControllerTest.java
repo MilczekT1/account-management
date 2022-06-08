@@ -31,12 +31,13 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(
         webEnvironment = RANDOM_PORT
 )
-public class AccountActivationControllerTest {
+class AccountActivationControllerTest {
+
     @Value("${budget.baseUrl.gateway}")
     private String BASE_URI;
+
     private String contextPath;
     @LocalServerPort
-
     private int port;
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -55,7 +56,7 @@ public class AccountActivationControllerTest {
 
     @BeforeEach
     void setUp() {
-        contextPath = "http://localhost:" + port + AccountActivationController.BASE_PATH + "/accounts";
+        contextPath = "http://localhost:" + port + "/api/account-mgt/v1/accounts";
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBasicAuth(ChassisSecurityBasicAuthHelper.getEncodedCredentials());
         httpEntity = new HttpEntity<>(httpHeaders);
@@ -72,8 +73,8 @@ public class AccountActivationControllerTest {
         // Then:
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
         List<String> locationHeader = responseEntity.getHeaders().get("Location");
-        assertThat(locationHeader).isNotNull();
-        assertThat(locationHeader.isEmpty()).isFalse();
+        assertThat(locationHeader).isNotNull()
+                .isNotEmpty();
         assertThat(locationHeader.get(0)).isEqualTo(BASE_URI + "/register");
 
     }
@@ -89,8 +90,8 @@ public class AccountActivationControllerTest {
         // Then:
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
         List<String> locationHeader = responseEntity.getHeaders().get("Location");
-        assertThat(locationHeader).isNotNull();
-        assertThat(locationHeader.isEmpty()).isFalse();
+        assertThat(locationHeader).isNotNull()
+                .isNotEmpty();
         assertThat(locationHeader.get(0)).isEqualTo(BASE_URI + "/login");
     }
 
@@ -101,7 +102,7 @@ public class AccountActivationControllerTest {
         String activationCodeString = UUID.randomUUID().toString();
         String url = contextPath + "/" + accId + "/activation-codes/" + activationCodeString;
         ActivationCode activationCode = new ActivationCode()
-                .setActivationCode(activationCodeString)
+                .setActivationCodeValue(activationCodeString)
                 .setAccountId(accId);
         Account account = new Account()
                 .setId(accId)
@@ -113,13 +114,13 @@ public class AccountActivationControllerTest {
         // Then:
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FOUND);
         List<String> locationHeader = responseEntity.getHeaders().get("Location");
-        assertThat(locationHeader).isNotNull();
-        assertThat(locationHeader.isEmpty()).isFalse();
+        assertThat(locationHeader).isNotNull()
+                .isNotEmpty();
         assertThat(locationHeader.get(0)).isEqualTo(BASE_URI + "/login");
     }
 
     @Test
-    public void activateUser_BAHeaderNotRequired() {
+    void activateUser_BAHeaderNotRequired() {
         // When:
         String accountId = UUID.randomUUID().toString();
         String activationCode = UUID.randomUUID().toString();
