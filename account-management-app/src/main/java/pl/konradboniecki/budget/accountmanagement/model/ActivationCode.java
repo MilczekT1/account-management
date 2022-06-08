@@ -23,13 +23,13 @@ public class ActivationCode {
     @Column(name = "account_id")
     private String accountId;
     @Column(name = "activation_code")
-    private String activationCode;
+    private String activationCodeValue;
     @Column(name = "creation_time")
     private Instant created;
 
-    public ActivationCode(String accountId, String activationCode) {
+    public ActivationCode(String accountId, String activationCodeValue) {
         setCreated(Instant.now());
         setAccountId(accountId);
-        setActivationCode(activationCode);
+        setActivationCodeValue(activationCodeValue);
     }
 }

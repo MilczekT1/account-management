@@ -152,7 +152,7 @@ class ActivationServiceTest {
     private void mockReturningActivationCode() {
         ActivationCode activationCode = new ActivationCode()
                 .setAccountId(idOfExistingAndNotEnabledAccount)
-                .setActivationCode(validActivationCode);
+                .setActivationCodeValue(validActivationCode);
         when(activationCodeService.findByAccountId(idOfExistingAndNotEnabledAccount))
                 .thenReturn(Optional.of(activationCode));
     }

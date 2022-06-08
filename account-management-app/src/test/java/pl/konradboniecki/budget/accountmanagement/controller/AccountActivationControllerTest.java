@@ -101,7 +101,7 @@ class AccountActivationControllerTest {
         String activationCodeString = UUID.randomUUID().toString();
         String url = contextPath + "/" + accId + "/activation-codes/" + activationCodeString;
         ActivationCode activationCode = new ActivationCode()
-                .setActivationCode(activationCodeString)
+                .setActivationCodeValue(activationCodeString)
                 .setAccountId(accId);
         Account account = new Account()
                 .setId(accId)

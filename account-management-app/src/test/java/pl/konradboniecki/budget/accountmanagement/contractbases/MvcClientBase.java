@@ -143,7 +143,7 @@ public class MvcClientBase {
                 .setId(UUID.randomUUID().toString())
                 .setAccountId(accountId)
                 .setCreated(Instant.now())
-                .setActivationCode(UUID.randomUUID().toString());
+                .setActivationCodeValue(UUID.randomUUID().toString());
         when(activationCodeService.save(any(ActivationCode.class)))
                 .thenReturn(activationCode);
     }

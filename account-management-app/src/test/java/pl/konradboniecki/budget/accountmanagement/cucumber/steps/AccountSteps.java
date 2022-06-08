@@ -239,7 +239,7 @@ public class AccountSteps {
                 .exchange("/api/account-mgt/v1/accounts/{accountId}/activation-codes", HttpMethod.POST, entity, ActivationCode.class, accountId);
         sharedData.setLastResponseEntity(responseEntity);
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
-            sharedData.setLastActivationCode(responseEntity.getBody().getActivationCode());
+            sharedData.setLastActivationCode(responseEntity.getBody().getActivationCodeValue());
         }
     }
 
@@ -291,7 +291,7 @@ public class AccountSteps {
         ActivationCode activationCode = (ActivationCode) sharedData.getLastResponseEntity().getBody();
 
         assertThat(activationCode).isNotNull();
-        assertThat(activationCode.getActivationCode()).isNotEmpty();
+        assertThat(activationCode.getActivationCodeValue()).isNotEmpty();
     }
 
     @Given("account (.+) was already enabled$")

@@ -60,20 +60,20 @@ public class ActivationService {
         ActivationCode activationCodeToSave = new ActivationCode()
                 .setAccountId(accountId)
                 .setCreated(Instant.now())
-                .setActivationCode(UUID.randomUUID().toString());
+                .setActivationCodeValue(UUID.randomUUID().toString());
         return toOASActivationCode(activationCodeService.save(activationCodeToSave));
     }
 
     private boolean activationCodeIsPresentAndMatchesWithUrl(Optional<ActivationCode> activationCode, String activationCodeFromUrl) {
         return activationCode.isPresent()
-                && activationCode.get().getActivationCode().equals(activationCodeFromUrl);
+                && activationCode.get().getActivationCodeValue().equals(activationCodeFromUrl);
     }
 
     private OASActivationCode toOASActivationCode(ActivationCode activationCode) {
         return new OASActivationCode()
                 .id(UUID.fromString(activationCode.getId()))
                 .accountId(UUID.fromString(activationCode.getAccountId()))
-                .activationCode(UUID.fromString(activationCode.getActivationCode()))
+                .activationCode(UUID.fromString(activationCode.getActivationCodeValue()))
                 .created(activationCode.getCreated());
     }
 }
