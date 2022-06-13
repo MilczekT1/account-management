@@ -60,7 +60,7 @@ public class MvcClientBase {
         findByIdContracts_mockExistingAndNotExistingAccount();
 
         existingEmail = "existing_email@mail.com";
-        existingEmailInFindByMailContracts = "existing_email@find_by_mail.com";
+        existingEmailInFindByMailContracts = "existing_email@find-by-mail.com";
         notExistingEmail = "not_existing_email@mail.com";
 
         findByEmailContracts_mockExistingAndNotExistingAccount();
