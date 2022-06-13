@@ -47,8 +47,8 @@ public class PasswordMgtClientBase {
         RestAssured.config = config().redirect(redirectConfig().followRedirects(false));
 
         existingAccountId = "d19391f3-66e0-434c-ba2b-01d64cf37a95";
-        existingEmail = "existing_email@password_management.com";
-        notExistingEmail = "not_existing_email@password_management.com";
+        existingEmail = "existing_email@password-management.com";
+        notExistingEmail = "not_existing_email@password-management.com";
 
         mockExistingAndNotExistingAccount();
         change_password_mock();
