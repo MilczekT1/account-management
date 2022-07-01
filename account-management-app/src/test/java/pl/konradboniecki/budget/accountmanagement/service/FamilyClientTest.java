@@ -31,7 +31,7 @@ import static pl.konradboniecki.budget.accountmanagement.service.FamilyClientTes
 )
 class FamilyClientTest {
 
-    public static final String STUB_VERSION = "0.8.0-SNAPSHOT";
+    public static final String STUB_VERSION = "0.9.0-SNAPSHOT";
     public static final String STUB_GROUP_ID = "pl.konradboniecki.budget";
     public static final String STUB_ARTIFACT_ID = "family-management";
     @StubRunnerPort(STUB_GROUP_ID + ":" + STUB_ARTIFACT_ID)

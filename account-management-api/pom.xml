@@ -6,12 +6,12 @@
     <parent>
         <groupId>pl.konradboniecki.budget</groupId>
         <artifactId>account-management-pom</artifactId>
-        <version>0.8.0-SNAPSHOT</version>
+        <version>0.8.0</version>
     </parent>
 
     <groupId>pl.konradboniecki.budget</groupId>
     <artifactId>account-management-api</artifactId>
-    <version>0.8.0-SNAPSHOT</version>
+    <version>0.8.0</version>
 
     <dependencyManagement>
         <dependencies>
