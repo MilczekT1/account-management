@@ -331,7 +331,7 @@ components:
       required:
         - id
         - accountId
-        - activationCode
+        - activationCodeValue
         - created
       properties:
         id:
@@ -342,7 +342,7 @@ components:
           type: string
           format: uuid
           example: "dc1fd96a-2532-4a81-afbe-7f7b2245331e"
-        activationCode:
+        activationCodeValue:
           type: string
           format: uuid
           example: "dc1fd96a-2532-4a81-afbe-7f7b2245331e"
