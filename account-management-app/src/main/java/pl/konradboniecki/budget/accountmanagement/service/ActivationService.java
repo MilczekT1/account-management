@@ -73,7 +73,7 @@ public class ActivationService {
         return new OASActivationCode()
                 .id(UUID.fromString(activationCode.getId()))
                 .accountId(UUID.fromString(activationCode.getAccountId()))
-                .activationCode(UUID.fromString(activationCode.getActivationCodeValue()))
+                .activationCodeValue(UUID.fromString(activationCode.getActivationCodeValue()))
                 .created(activationCode.getCreated());
     }
 }
