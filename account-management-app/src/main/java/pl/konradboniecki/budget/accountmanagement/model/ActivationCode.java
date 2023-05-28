@@ -1,11 +1,11 @@
 package pl.konradboniecki.budget.accountmanagement.model;
 
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import java.time.Instant;
 
 @Data
