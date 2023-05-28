@@ -114,7 +114,7 @@ class AccountServiceTest {
 
         // Then:
         assertThat(throwable).isNotNull();
-        assertThat(throwable.getStatus()).isEqualTo(HttpStatus.CONFLICT);
+        assertThat(throwable.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
 
     }
 

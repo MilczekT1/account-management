@@ -21,7 +21,8 @@ import static pl.konradboniecki.budget.accountmanagement.service.FamilyClientTes
 @SpringBootTest(
         webEnvironment = WebEnvironment.RANDOM_PORT,
         properties = {
-                "stubrunner.cloud.loadbalancer.enabled=false"
+                "stubrunner.cloud.loadbalancer.enabled=false",
+                "stubrunner.cloud.delegate.enabled=true"
         }
 )
 @AutoConfigureStubRunner(
