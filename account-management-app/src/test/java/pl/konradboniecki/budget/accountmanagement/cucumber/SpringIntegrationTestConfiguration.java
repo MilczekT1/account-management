@@ -22,19 +22,4 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
         })
 @CucumberContextConfiguration
 public class SpringIntegrationTestConfiguration {
-
-//        @Rule
-//        public static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:6.0")
-//                .withExposedPorts(27017);
-//
-//        @DynamicPropertySource
-//        static void mongoDbProperties(DynamicPropertyRegistry registry) {
-//                final var shouldTurnOffMongo = System.getenv("TEST_CONTAINERS_OFF");
-//                if ("true".equals(shouldTurnOffMongo)) {
-//                        log.info("Skipping mongo container init for acceptance tests");
-//                        return;
-//                }
-//                mongoDBContainer.start();
-//                registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
-//        }
 }
