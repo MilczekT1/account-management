@@ -2,7 +2,7 @@ package pl.konradboniecki.budget.accountmanagement.cucumber.commons;
 
 import lombok.Data;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class SharedData {
     private String lastCreatedPlainTextPassword;
     private String lastActivationCode;
 
-    public HttpStatus getStatusCode() {
+    public HttpStatusCode getStatusCode() {
         return lastResponseEntity.getStatusCode();
     }
 

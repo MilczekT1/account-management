@@ -39,25 +39,25 @@ public class CommonSteps {
 
     @Then("the operation is unsuccessful")
     public void theOperationIsUnsuccessful() {
-        HttpStatus status = sharedData.getStatusCode();
+        HttpStatusCode status = sharedData.getStatusCode();
         assertThat(status.is4xxClientError()).isTrue();
     }
 
     @Then("the operation is successful")
     public void theOperationIsSuccessful() {
-        HttpStatus status = sharedData.getStatusCode();
+        HttpStatusCode status = sharedData.getStatusCode();
         assertThat(status.is2xxSuccessful()).isTrue();
     }
 
     @Then("(.+) is not found$")
     public void accountIsNotFound(String resource) {
-        HttpStatus status = sharedData.getStatusCode();
+        HttpStatusCode status = sharedData.getStatusCode();
         assertThat(status).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     @Then("(.+) is found$")
     public void accountIsFound(String resource) {
-        HttpStatus status = sharedData.getStatusCode();
+        HttpStatusCode status = sharedData.getStatusCode();
         assertThat(status).isEqualTo(HttpStatus.OK);
     }
 

@@ -175,7 +175,7 @@ public class AccountSteps {
             ResponseEntity<?> responseEntity = testRestTemplate
                     .exchange("/api/family-mgt/v1/families/{familyId}", HttpMethod.GET, entity, Void.class, familyId);
             sharedData.setLastResponseEntity(responseEntity);
-            HttpStatus status = sharedData.getStatusCode();
+            HttpStatusCode status = sharedData.getStatusCode();
             assertThat(status.is2xxSuccessful()).isTrue();
         }
     }

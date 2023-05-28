@@ -1,6 +1,8 @@
 spring:
   application:
     name: account-management
+  main:
+    allow-bean-definition-overriding: true
   profiles:
     active: test
   cloud:
@@ -8,8 +10,6 @@ spring:
       enabled: false
   jpa:
     open-in-view: false
-  zipkin:
-    enabled: false
   security:
     user:
       name: "testUserName"

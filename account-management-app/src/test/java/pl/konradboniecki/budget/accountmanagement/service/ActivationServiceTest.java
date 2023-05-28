@@ -89,7 +89,7 @@ class ActivationServiceTest {
         Assertions.assertAll(
                 () -> assertThat(throwable).isNotNull(),
                 () -> assertThat(throwable).isInstanceOf(ResponseStatusException.class),
-                () -> assertThat(throwable.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST)
+                () -> assertThat(throwable.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST)
         );
     }
 
@@ -105,7 +105,7 @@ class ActivationServiceTest {
         Assertions.assertAll(
                 () -> assertThat(throwable).isNotNull(),
                 () -> assertThat(throwable).isInstanceOf(ResponseStatusException.class),
-                () -> assertThat(throwable.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST)
+                () -> assertThat(throwable.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST)
         );
     }
 
