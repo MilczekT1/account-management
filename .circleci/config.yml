@@ -73,7 +73,7 @@ jobs:
           name: Build and push docker image
           command: |
             cd account-management-app || exit
-            VERSION=$(./mvnw -s ../.circleci/settings.xml help:evaluate -Dexpression=project.version -q -DforceStdout)
+            VERSION=$(../mvnw -s ../.circleci/settings.xml help:evaluate -Dexpression=project.version -q -DforceStdout)
             TAG=$CIRCLE_PROJECT_REPONAME-$VERSION-$CIRCLE_BUILD_NUM-PR
             if [ "$CIRCLE_BRANCH" == "master" ]; then
               TAG=$CIRCLE_PROJECT_REPONAME-$VERSION
